@@ -23,7 +23,7 @@ fi
 # ones.  So we need to modify MODULEPATH first.  We should have LROSE modules for Intel 18+, GNU 8+ and PGI 19 (and 20?). 
 # You should be able to use whatever compiler is in your current environment, and it'll pick up the right LROSE.
 
-export LROSE_INTALL_DIR=/root/lrose/
+export LROSE_INSTALL_DIR=/root/lrose/
 #module load cuda/10.1
 
 
