@@ -12,10 +12,10 @@ set(MODE CPU)
 set(CMAKE_BUILD_TYPE Release)
 
 # max iterations in the solver(src/CostFunction.cpp) default=2000
-set(SOLVER_MAXITER 2000)
+set(SOLVER_MAXITER 1)
 
 # max interations for inner loop with TN solver default=4000
-set(SOLVER_INNER_MAXITER 4000)
+set(SOLVER_INNER_MAXITER 20)
 
 # 1= truncated Newton solver, 2 = Samurai CG(orig)
 set(SOLVER_SAMURAI 1)
