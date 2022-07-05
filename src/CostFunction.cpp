@@ -826,21 +826,21 @@ int CostFunction::MTLineSearch(real* &x, real* &g, real *s, real *fval, real ini
   int verbose = S_VERBOSE;
   int n_feval = 0;
   
-#pragma acc data create(mt_work[0:nState])
-{
+//#pragma acc data create(mt_work[0:nState])
+//{
   GPTLstart("CostFunction::MTLineSearch");
 
   n = nState;
 
   //compute dginit <g,s> (inital gradient in the search direction)
   dginit = 0.0;
-#pragma acc data copyin(g[0:nState],s[0:nState])
-{
+//#pragma acc data copyin(g[0:nState],s[0:nState])
+//{
   #pragma acc parallel loop reduction(+:dginit)
   for (j=0; j< nState; j++){
     dginit += g[j]*s[j];
   }
-}
+//}
   
   if (dginit >= 0.0) {
     cout << "Search direction is not a descent direction! dginit = " << dginit << endl;
@@ -878,14 +878,14 @@ int CostFunction::MTLineSearch(real* &x, real* &g, real *s, real *fval, real ini
   stx = sty = 0.0;
   step = initstep;
 
-#pragma acc data copyin(x[0:nState])
-{
+//#pragma acc data copyin(x[0:nState])
+//{
   //copy the orig x into the work vector
   #pragma acc parallel loop private(j)
   for (j=0; j<nState; j++) {
     mt_work[j] = x[j];
   }
-}
+//}
 
   //Begin iteration
   for (i=0; i< max_funcs; i++){
@@ -911,8 +911,8 @@ int CostFunction::MTLineSearch(real* &x, real* &g, real *s, real *fval, real ini
     //  Evaluate the function and gradient at step and compute the directional derivative.
     //the orig x was copied into the work vector
     //x = x-orig + step * s;
-#pragma acc data copyin(s[0:nState]) copyout(x[0:nState]) copy(g[0:nState])
-{
+//#pragma acc data copyin(s[0:nState]) copyout(x[0:nState]) copy(g[0:nState])
+//{
     #pragma acc parallel loop private(j)
     for (j = 0; j<nState; j++) {
       x[j] = mt_work[j] + step*s[j];
@@ -929,7 +929,7 @@ int CostFunction::MTLineSearch(real* &x, real* &g, real *s, real *fval, real ini
     for (j = 0; j< nState; j++){
       dg += g[j]*s[j];
     }
-}
+//}
     ftest1 = finit + step*dgtest;
 
     //to compare with PETSc -tao_ls_monitor
@@ -1020,7 +1020,7 @@ int CostFunction::MTLineSearch(real* &x, real* &g, real *s, real *fval, real ini
 
 
   GPTLstop("CostFunction::MTLineSearch");
-}
+//}
 
   return reason;
 
