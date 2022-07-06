@@ -912,7 +912,7 @@ int CostFunction::MTLineSearch(real* &x, real* &g, real *s, real *fval, real ini
     //the orig x was copied into the work vector
     //x = x-orig + step * s;
 //#pragma acc data copyin(s[0:nState]) copyout(x[0:nState]) copy(g[0:nState])
-{
+//{
     #pragma acc parallel loop private(j)
     for (j = 0; j<nState; j++) {
       x[j] = mt_work[j] + step*s[j];
