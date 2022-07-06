@@ -205,7 +205,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE IO_BENCHMARK=${IO_BENCHMARK} 
 # off by the subsequent '-O1'.
 # This is annoying, and I don't currently have a workaround.
 
-if(CMAKE_CXX_COMPILER_ID STREQUAL "PGI")
+if(CMAKE_CXX_COMPILER_ID STREQUAL "NVHPC")
   if(CMAKE_BUILD_TYPE STREQUAL "Release")
     set(CMAKE_CXX_FLAGS "")
     set(CMAKE_CXX_FLAGS_RELEASE "")
